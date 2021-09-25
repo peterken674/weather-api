@@ -11,20 +11,20 @@ def index(request):
     temps = results["temperatures"]
 
     # List of temperature values
-    list_temps = []
+    temps_list = []
 
     for temp in temps:
         temperature = temp.temperature
-        list_temps.append(temperature)
+        temps_list.append(temperature)
 
-    maximum = max(list_temps)
-    minimum = min(list_temps)
-    average = sum(list_temps) / len(list_temps)
-    median = statistics.median(list_temps)
+    maximum = max(temps_list)
+    minimum = min(temps_list)
+    average = sum(temps_list) / len(temps_list)
+    median = statistics.median(temps_list)
 
     context = {
         "city": city,
-        "temps": list_temps,
+        "temps": temps_list,
         "maximum": maximum,
         "minimum": minimum,
         "average": average,

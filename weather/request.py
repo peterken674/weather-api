@@ -44,7 +44,7 @@ def process_results(results_list):
     Returns:
         temperatures_list ([obj]): List of forecasted average temperatures for specified number of days
     """
-    temperatures_list = []
+    day_objs = []
 
     # Loop through the results list creating day objects and map them to the model.
     for day in results_list:
@@ -53,8 +53,8 @@ def process_results(results_list):
 
         day_obj = Weather(date, temp)
 
-        temperatures_list.append(day_obj)
+        day_objs.append(day_obj)
 
-    return temperatures_list
+    return day_objs
 
 
