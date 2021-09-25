@@ -7,6 +7,14 @@
     <title>Weather App</title>
 </head>
 <body>
-    <p>Working!</p>
+    <p>{{city}}</p>
+    {% for temp in temps %}
+        <p>{{temp}}</p>
+    {% endfor %}
+    <hr>
+    <p>Max: {{maximum}}</p>
+    <p>Min: {{minimum}}</p>
+    <p>Average: {{average}}</p>
+    <p>Median: {{median}}</p>
 </body>
 </html>

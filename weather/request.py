@@ -1,5 +1,5 @@
 import urllib.request, json
-from models import Weather
+from .models import Weather
 from django.conf import settings
 
 # Global variables
