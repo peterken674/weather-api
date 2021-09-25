@@ -1,33 +1,38 @@
 from django.shortcuts import render
 from .request import fetch_data
 import statistics
+from .models import WeatherResults
 
-def index(request):
-    """Index view
+from rest_framework.views import APIView
+from .serializer import ResultsSerializer
+from rest_framework.response import Response
 
-    """
-    results = fetch_data("Nairobi", 3)
-    city = results["city"]
-    temps = results["temperatures"]
+class Results(APIView):
+    def get_results(self, city, num_of_days):
+        data = fetch_data(city, num_of_days)
+        temps = data["temperatures"]
 
-    # List of temperature values
-    temps_list = []
+        # List of temperature (only) values
+        temps_list = []
 
-    for temp in temps:
-        temperature = temp.temperature
-        temps_list.append(temperature)
+        for temp in temps:
+            temperature = temp.temperature
+            temps_list.append(temperature)
 
-    maximum = max(temps_list)
-    minimum = min(temps_list)
-    average = sum(temps_list) / len(temps_list)
-    median = statistics.median(temps_list)
+        # Calculations
+        maximum = max(temps_list)
+        minimum = min(temps_list)
+        average = sum(temps_list) / len(temps_list)
+        median = statistics.median(temps_list)
 
-    context = {
-        "city": city,
-        "temps": temps_list,
-        "maximum": maximum,
-        "minimum": minimum,
-        "average": average,
-        "median": median,
-    }
-    return render(request, 'index.html', context)
+        # Create WeatherResults to be serialized.
+        result_obj = WeatherResults(maximum, minimum, average, median)
+
+        return result_obj
+
+    def get(self, request, city, num_of_days, format=None):
+        results = self.get_results(city, num_of_days)
+        serializers = ResultsSerializer(results)
+        return Response(serializers.data)
+
+

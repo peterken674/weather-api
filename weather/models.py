@@ -7,3 +7,10 @@ class Weather:
     def __init__(self, date, temperature):
         self.date = date
         self.temperature = temperature
+
+class WeatherResults:
+    def __init__(self, max, min, avg, median):
+        self.maximum = max
+        self.minimum = min
+        self.average = avg
+        self.median = median
