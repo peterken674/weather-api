@@ -30,8 +30,9 @@ class Results(APIView):
 
         return result_obj
 
-    def get(self, request, city, num_of_days, format=None):
-        results = self.get_results(city, num_of_days)
+    def get(self, request, city, format=None):
+        days = int(request.query_params['days'])
+        results = self.get_results(city, days)
         serializers = ResultsSerializer(results)
         return Response(serializers.data)
 

@@ -1,6 +1,6 @@
-from django.urls import path
+from django.urls import re_path
 from . import views
 
 urlpatterns = [
-    path('api/locations/<city>/<num_of_days>/', views.Results.as_view())
+    re_path(r'^api/locations/(?P<city>\w+)/$', views.Results.as_view())
 ]
