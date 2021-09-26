@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from .request import fetch_data
 import statistics
 from .models import WeatherResults
@@ -7,7 +6,6 @@ from urllib.error import HTTPError
 from rest_framework.views import APIView
 from .serializer import ResultsSerializer
 from rest_framework.response import Response
-from django.http import JsonResponse
 
 class Results(APIView):
     def get_results(self, city, num_of_days):

@@ -21,8 +21,8 @@ from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('weather.urls')),
-    path('docs/', include_docs_urls(title='WeatherAPI')),
+    path('api/', include('weather.urls')),
+    path('', include_docs_urls(title='WeatherAPI')),
     path('schema', get_schema_view(
         title="Weather API",
         description="API Test",
