@@ -1,6 +1,7 @@
 import urllib.request, json
 from .models import Weather
 from django.conf import settings
+from urllib.error import HTTPError
 
 # Global variables
 api_key = settings.API_KEY
@@ -27,10 +28,10 @@ def fetch_data(city, number_of_days):
 
         temperatures = []
 
-        if response['location']:
-            city_name = response['location']['name']
-            forecast_results_list = response['forecast']['forecastday']
-            temperatures = process_results(forecast_results_list)
+    if response['location']:
+        city_name = response['location']['name']
+        forecast_results_list = response['forecast']['forecastday']
+        temperatures = process_results(forecast_results_list)
 
     return {"city": city_name, "temperatures": temperatures}
 
