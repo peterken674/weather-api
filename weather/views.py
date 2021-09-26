@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 
 class Results(APIView):
-    def get_results(self, city: str, num_of_days):
+    def get_results(self, city, num_of_days):
         """Call the function that processes the data from the API and computes the required values, packaging them into an object.
 
         Args:
@@ -43,12 +43,29 @@ class Results(APIView):
 
     def get(self, request, city, format=None):
         try:
-            days = int(request.GET.get('days', 3))
-            results = self.get_results(city, days)
-            serializers = ResultsSerializer(results)
-            return Response(serializers.data)
+            if request.GET.get('days'):
+                days_str = request.GET.get('days')
+
+                try: 
+                    days = int(days_str)
+                except ValueError:
+                    data={'status_code': 400, 'message': 'The querystring days must have a positive number greater than 0.'}
+                    return Response(data)
+
+                days = int(days_str)
+                if days > 0:
+                    results = self.get_results(city, days)
+                    serializers = ResultsSerializer(results)
+                    return Response(serializers.data)
+                else:
+                    data={'status_code': 400, 'message': 'The query string days must have a positive number greater than 0.'}
+                    return Response(data)
+            else:
+                data={'status_code': 400, 'message': 'You must provide the days query parameter.'}
+                return Response(data)
+
         except HTTPError as err:
-            data={'status_code': err.code, 'message': err.reason}
+            data={'status_code': err.code, 'message': 'City not found.'}
             return Response(data)
 
 
