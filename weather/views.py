@@ -31,8 +31,8 @@ class Results(APIView):
         # Calculations
         maximum = max(temps_list)
         minimum = min(temps_list)
-        average = "{:.1f}".format( sum(temps_list) / len(temps_list))
-        median = "{:.1f}".format( statistics.median(temps_list))
+        average = float("{:.1f}".format( sum(temps_list) / len(temps_list)))
+        median = float("{:.1f}".format( statistics.median(temps_list)))
 
         # Create WeatherResults to be serialized.
         result_obj = WeatherResults(maximum, minimum, average, median)
