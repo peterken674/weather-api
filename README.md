@@ -15,18 +15,18 @@ _number_of_days (int)_ : A positive integer indicating number of days to fetch t
 
 This API response is in the following JSON format:
 
-```JSON
+```json
 {
-    “maximum”: value,
-    “minimum”: value,
-    “average”: value,
-    “median”: value
+    "maximum": value,
+    "minimum": value,
+    "average": value,
+    "median": value
 }
 ```
 
 or
 
-```JSON
+```json
 {
     "status_code": value,
     "message": value
