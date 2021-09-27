@@ -25,7 +25,7 @@ urlpatterns = [
     path('', include_docs_urls(title='WeatherAPI')),
     path('schema', get_schema_view(
         title="Weather API",
-        description="API Test",
+        description="Maximum, minimum, average and median of forecasts",
         version="v1"
     ), name='openapi-schema'),
     

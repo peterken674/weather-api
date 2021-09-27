@@ -23,8 +23,8 @@ class WeatherTest(TestCase):
 
         self.day1 = self.temp_objs[0]  # today
         self.day2 = self.temp_objs[1]  # tomorrow
-        self.day3 = self.temp_objs[2]  # day after tomorrow, and so on, depending on num_of_days
-
+        # day after tomorrow, and so on, depending on num_of_days
+        self.day3 = self.temp_objs[2]
 
     def test_init(self):
         """test_init test case to test if the object is initialized properly
@@ -58,21 +58,25 @@ class WeatherResultsTest(TestCase):
         Args:
             unittest (TestCase): TestCase class that helps in creating test cases.
     """
-    
+
     def setUp(self) -> None:
         """setUp method to run before each test cases.
         """
-        self.test_obj = WeatherResults(23.4, 20.8, 22.4, 22.1) # arbitrary test values
+        self.test_obj = WeatherResults(
+            23.4, 20.8, 22.4, 22.1)  # arbitrary test values
 
         # Make a test query to the server
         self.response_obj = fetch_data('Nairobi', 3)
-        self.my_api_response = requests.get('http://127.0.0.1:8000/api/locations/Nairobi/?days=3') # ensure your server is running (port 8000) for this to work
+        # ensure your server is running (port 8000) for this to work
+        self.my_api_response = requests.get(
+            'http://127.0.0.1:8000/api/locations/Nairobi/?days=3')
 
         self.temp_objs = self.response_obj['temperatures']
 
         self.day1 = self.temp_objs[0]  # today
         self.day2 = self.temp_objs[1]  # tomorrow
-        self.day3 = self.temp_objs[2]  # day after tomorrow, and so on, depending on num_of_days
+        # day after tomorrow, and so on, depending on num_of_days
+        self.day3 = self.temp_objs[2]
 
         self.my_api_response_json = self.my_api_response.json()
 
@@ -88,20 +92,18 @@ class WeatherResultsTest(TestCase):
     def test_my_api(self):
         """Test the endpoint 
         """
-        
 
-        temperatures_list = [self.day1.temperature, self.day2.temperature, self.day3.temperature]
+        temperatures_list = [self.day1.temperature,
+                             self.day2.temperature, 
+                             self.day3.temperature]
 
         maximum = max(temperatures_list)
         minimum = min(temperatures_list)
-        average = float("{:.1f}".format( sum(temperatures_list) / len(temperatures_list)))
-        median = float("{:.1f}".format( statistics.median(temperatures_list)))
+        average = float("{:.1f}".format(
+            sum(temperatures_list) / len(temperatures_list)))
+        median = float("{:.1f}".format(statistics.median(temperatures_list)))
 
         self.assertEqual(self.my_api_response_json['maximum'], maximum)
         self.assertEqual(self.my_api_response_json['minimum'], minimum)
         self.assertEqual(self.my_api_response_json['average'], average)
         self.assertEqual(self.my_api_response_json['median'], median)
-        
-
-
-

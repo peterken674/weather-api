@@ -1,13 +1,15 @@
-import urllib.request, json
+import urllib.request
+import json
 from .models import Weather
 from django.conf import settings
-from urllib.error import HTTPError
 
 # Global variables
 api_key = settings.API_KEY
 base_url = 'https://api.weatherapi.com/v1/forecast.json?key={}&q={}&days={}&aqi=no&alerts=no'
 
 # Fetch data
+
+
 def fetch_data(city, number_of_days):
     """Fetch temperatures from Weather API
 
@@ -24,7 +26,7 @@ def fetch_data(city, number_of_days):
 
     with urllib.request.urlopen(request_url) as url:
         data = url.read()
-        response = json.loads(data) #Convert to JSON
+        response = json.loads(data)  # Convert to JSON
 
         temperatures = []
 
@@ -36,6 +38,8 @@ def fetch_data(city, number_of_days):
     return {"city": city_name, "temperatures": temperatures}
 
 # Process API response
+
+
 def process_results(results_list):
     """Map the results to the model.
 
@@ -57,5 +61,3 @@ def process_results(results_list):
         day_objs.append(day_obj)
 
     return day_objs
-
-
